@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doma Protocol Explorer</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      padding: 40px 20px 80px;
+      position: relative;
+    }
+
+    .logo-top {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 120px;
+    }
+
+    .logo-bottom {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 100px;
+      opacity: 0.6;
+    }
+
+    h1 {
+      text-align: center;
+      color: #38bdf8;
+      margin-top: 60px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .explorer-container {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .visual-box {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      width: 500px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+
+    .visual-box svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .info-box {
+      max-width: 500px;
+      padding: 16px;
+    }
+
+    .info-title {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .info-desc {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      border-left: 2px dashed #38bdf8;
+      padding-left: 12px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+      justify-content: center;
+    }
+
+    .nav-buttons button {
+      padding: 10px 20px;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #2563eb;
+    }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 600px;
+      height: 8px;
+      background: #334155;
+      border-radius: 4px;
+      margin: 30px auto 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background: #38bdf8;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .footer {
+      text-align: center;
+      color: #94a3b8;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    .fade-in {
+      animation: fade 1s ease-in forwards;
+      opacity: 0;
+    }
+
+    @keyframes fade {
+      to { opacity: 1; }
+    }
+
+    .path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: draw 2s ease forwards;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <img src="assets/doma.png" class="logo-top" alt="Doma logo" />
+
+  <h1>Doma Protocol Explorer</h1>
+  <p class="subtitle">Tokenize → Fractionalize → Bridge → List → Synthetic Rights</p>
+
+  <div class="progress-bar">
+    <div class="progress-bar-inner" id="progress-bar-inner"></div>
+  </div>
+
+  <div class="explorer-container">
+    <div class="visual-box" id="svg-container"></div>
+    <div class="info-box">
+      <div class="info-title" id="step-title">Loading...</div>
+      <div class="info-desc" id="step-description">Loading step description...</div>
+      <div class="nav-buttons">
+        <button onclick="prevStep()">← Previous</button>
+        <button onclick="nextStep()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built by <a href="https://x.com/Diveaix" target="_blank">Diveaix</a> for the <a href="https://x.com/domaprotocol" target="_blank">Doma</a> community.
+  </div>
+
+  <script>
+    const steps = [
+      {
+        title: "Tokenization",
+        description: "Your domain becomes a Domain Ownership Token (NFT) on-chain via registrar-verified signature.",
+        svg: `<svg viewBox="0 0 500 300"><rect x="20" y="110" width="100" height="60" fill="#334155" rx="8" class="fade-in"/><text x="70" y="145" font-size="14" text-anchor="middle" fill="#fff" class="fade-in">example.com</text><line x1="120" y1="140" x2="220" y2="140" stroke="#38bdf8" stroke-width="3" class="path"/><polygon points="220,135 230,140 220,145" fill="#38bdf8" class="fade-in"/><rect x="240" y="110" width="100" height="60" fill="#0ea5e9" rx="8" class="fade-in"/><text x="290" y="130" font-size="12" text-anchor="middle" fill="#fff" class="fade-in">Doma</text><text x="290" y="150" font-size="12" text-anchor="middle" fill="#fff" class="fade-in">Record</text><circle cx="400" cy="140" r="30" fill="#22c55e" class="fade-in"/><text x="400" y="145" text-anchor="middle" font-size="14" fill="#fff">NFT</text></svg>`
+      },
+      {
+        title: "Fractionalization",
+        description: "The Domain NFT is locked and fractionalized into multiple DOMA ERC-20 tokens representing ownership shares.",
+        svg: `<svg viewBox="0 0 500 300"><circle cx="100" cy="150" r="30" fill="#22c55e" class="fade-in"/><text x="100" y="155" text-anchor="middle" font-size="14" fill="#fff">NFT</text><line x1="160" y1="150" x2="250" y2="150" stroke="#38bdf8" stroke-width="3" class="path"/><polygon points="250,145 260,150 250,155" fill="#38bdf8" class="fade-in"/><rect x="280" y="110" width="50" height="40" fill="#eab308" rx="6" class="fade-in"/><text x="305" y="135" font-size="12" text-anchor="middle" fill="#000">DOMA</text><rect x="340" y="120" width="50" height="40" fill="#eab308" rx="6" class="fade-in"/><text x="365" y="145" font-size="12" text-anchor="middle" fill="#000">DOMA</text><rect x="310" y="170" width="50" height="40" fill="#eab308" rx="6" class="fade-in"/><text x="335" y="195" font-size="12" text-anchor="middle" fill="#000">DOMA</text></svg>`
+      },
+      {
+        title: "Bridging",
+        description: "The fractional tokens are bridged to another blockchain (e.g., Base) to unlock interoperability.",
+        svg: `<svg viewBox="0 0 500 300"><circle cx="100" cy="150" r="30" fill="#6366f1" class="fade-in"/><text x="100" y="155" text-anchor="middle" font-size="12" fill="#fff">Ethereum</text><path d="M130,150 Q250,60 370,150" stroke="#cbd5e1" stroke-width="2" fill="none" class="path"/><text x="250" y="80" text-anchor="middle" font-size="14" fill="#94a3b8" class="fade-in">Bridge</text><circle cx="400" cy="150" r="30" fill="#22d3ee" class="fade-in"/><text x="400" y="155" text-anchor="middle" font-size="12" fill="#000">Base</text></svg>`
+      },
+      {
+        title: "Marketplace",
+        description: "Fractional DOMA tokens are pooled into a liquidity pool and made available for trading on marketplace.",
+        svg: `<svg viewBox="0 0 500 300"><rect x="80" y="100" width="50" height="30" fill="#facc15" rx="4" class="fade-in"/><text x="105" y="120" font-size="12" text-anchor="middle" fill="#000">DOMA</text><line x1="130" y1="115" x2="240" y2="115" stroke="#fb923c" stroke-width="3" class="path"/><polygon points="240,110 250,115 240,120" fill="#fb923c" class="fade-in"/><rect x="260" y="100" width="160" height="100" fill="#fed7aa" rx="10" class="fade-in"/><text x="340" y="130" text-anchor="middle" font-size="14" fill="#000">Marketplace</text></svg>`
+      },
+      {
+        title: "Synthetic Rights",
+        description: "The token can wrap synthetic rights into separate tradable instruments like revenue share NFTs.",
+        svg: `<svg viewBox="0 0 550 300"><circle cx="150" cy="150" r="30" fill="#fcd34d" class="fade-in"/><text x="150" y="155" text-anchor="middle" font-size="13" fill="#000">ERC20</text><line x1="180" y1="150" x2="300" y2="150" stroke="#ec4899" stroke-width="3" class="path"/><polygon points="300,145 310,150 300,155" fill="#ec4899" class="fade-in"/><circle cx="400" cy="150" r="40" fill="#f472b6" class="fade-in"/><text x="400" y="150" text-anchor="middle" font-size="13" fill="#fff" dominant-baseline="middle">Synthetic</text><text x="400" y="170" text-anchor="middle" font-size="13" fill="#fff">NFT</text></svg>`
+      }
+    ];
+
+    let currentStep = 0;
+
+    function renderStep() {
+      document.getElementById('svg-container').innerHTML = steps[currentStep].svg;
+      document.getElementById('step-title').textContent = steps[currentStep].title;
+      document.getElementById('step-description').textContent = steps[currentStep].description;
+      document.getElementById('progress-bar-inner').style.width = ((currentStep + 1) / steps.length * 100) + "%";
+    }
+
+    function nextStep() {
+      currentStep = (currentStep + 1) % steps.length;
+      renderStep();
+    }
+
+    function prevStep() {
+      currentStep = (currentStep - 1 + steps.length) % steps.length;
+      renderStep();
+    }
+
+    renderStep();
+  </script>
+
+</body>
+</html>
