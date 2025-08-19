@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doma Protocol - Bridging Step</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2ff;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .svg-container {
+      margin: 40px auto;
+      width: 480px;
+      height: 280px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .fade-in {
+      animation: fade 1s ease-in forwards;
+      opacity: 0;
+    }
+
+    .path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: draw 2s ease forwards;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🌉 Bridging</h1>
+  <p>Fractional tokens are bridged from Ethereum to L2 networks like Base or Zora for efficient trading.</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ethereum Bubble -->
+      <circle cx="100" cy="150" r="30" fill="#6366f1" class="fade-in" style="animation-delay: 0.2s" />
+      <text x="100" y="155" text-anchor="middle" font-size="12" fill="#fff">Ethereum</text>
+
+      <!-- Bridge Arch -->
+      <path d="M130,150 Q250,60 370,150" stroke="#6b7280" stroke-width="2" fill="none" class="path" />
+      <text x="250" y="80" text-anchor="middle" font-size="14" fill="#6b7280" class="fade-in" style="animation-delay: 1s">Bridge</text>
+
+      <!-- L2 Bubble (Base) -->
+      <circle cx="400" cy="150" r="30" fill="#22d3ee" class="fade-in" style="animation-delay: 1.6s" />
+      <text x="400" y="155" text-anchor="middle" font-size="12" fill="#000">Base</text>
+
+      <!-- Token flying over bridge -->
+      <rect x="180" y="110" width="40" height="25" fill="#facc15" rx="4" class="fade-in" style="animation-delay: 2s" />
+      <text x="200" y="127" font-size="12" text-anchor="middle" fill="#000">DOMA</text>
+
+      <rect x="280" y="100" width="40" height="25" fill="#facc15" rx="4" class="fade-in" style="animation-delay: 2.2s" />
+      <text x="300" y="117" font-size="12" text-anchor="middle" fill="#000">DOMA</text>
+    </svg>
+  </div>
+</body>
+</html>
