@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doma Protocol - Marketplace Step</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff7ed;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .svg-container {
+      margin: 40px auto;
+      width: 480px;
+      height: 280px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .fade-in {
+      animation: fade 1s ease-in forwards;
+      opacity: 0;
+    }
+
+    .path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: draw 2s ease forwards;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes fade {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🏪 Marketplace Listing</h1>
+  <p>Fractional tokens are listed in liquidity pools or vaults for trading and price discovery.</p>
+
+  <div class="svg-container">
+    <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- DOMA Tokens -->
+      <rect x="80" y="100" width="50" height="30" fill="#facc15" rx="4" class="fade-in" style="animation-delay: 0.2s" />
+      <text x="105" y="120" font-size="12" text-anchor="middle" fill="#000">DOMA</text>
+
+      <rect x="80" y="150" width="50" height="30" fill="#facc15" rx="4" class="fade-in" style="animation-delay: 0.4s" />
+      <text x="105" y="170" font-size="12" text-anchor="middle" fill="#000">DOMA</text>
+
+      <!-- Arrows -->
+      <line x1="130" y1="115" x2="240" y2="115" stroke="#fb923c" stroke-width="3" class="path" />
+      <polygon points="240,110 250,115 240,120" fill="#fb923c" class="fade-in" style="animation-delay: 1s" />
+
+      <line x1="130" y1="165" x2="240" y2="165" stroke="#fb923c" stroke-width="3" class="path" />
+      <polygon points="240,160 250,165 240,170" fill="#fb923c" class="fade-in" style="animation-delay: 1.2s" />
+
+      <!-- Marketplace Vault -->
+      <rect x="260" y="100" width="160" height="100" fill="#fed7aa" rx="10" class="fade-in" style="animation-delay: 1.4s" />
+      <text x="340" y="130" text-anchor="middle" font-size="14" fill="#000">Marketplace</text>
+      <text x="340" y="150" text-anchor="middle" font-size="12" fill="#000">Liquidity Pool</text>
+    </svg>
+  </div>
+</body>
+</html>
